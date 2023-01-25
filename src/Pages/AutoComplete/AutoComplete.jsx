@@ -1,35 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-/**TODO:
- * 1. save the data in the state
- * 2. Create card component to display the data
- * 3. Create dropdown component to filter the data by caterogies
- * 4. Create search component to filter the data by user input
- * - create filter function(Primary category: Movies, Actors, Directors, by dropdown)
- *  -- filter function should take into account if movies are selected then only show movies with the actor/director specified by the user
- */
-
-/**
- *
- * @param {*} data
- * @returns
- */
-
-const AutoComplete = ({ actors }) => {
+const AutoComplete = ({ data, handleOptions, handleSelectedOption }) => {
+  const [optionsDisplay, setOptionsDisplay] = useState(false)
   return (
     <div>
       AutoComplete:
-      <i>
-        {actors.map(el =>
-          el.name === 'Arnold Schwarzenegger' ? JSON.stringify(el) : null
+      <section className='relative'>
+        <input
+          onChange={e => {
+            handleOptions(e.target.value)
+          }}
+          onFocus={() => {
+            setOptionsDisplay(true)
+          }}
+          type='text'
+          name='optionsInput'
+          id='options'
+        />
+        <h1>optionsDisplay: {optionsDisplay === true ? 'True' : 'False'}</h1>
+        {optionsDisplay && (
+          <ul className='absolute top-12'>
+            {data?.flat().map((item, index) => (
+              <li
+                onClick={() => {
+                  handleSelectedOption(item)
+                  setOptionsDisplay(false)
+                }}
+                className='bg-gray-500 w-fit px-2 py-1 rounded-xl'
+                key={item?.name + item?.birthdate + item?.birthname + index}
+              >
+                {item.name}
+              </li>
+            ))}
+          </ul>
         )}
-      </i>
-      <p>
-        CHECKING ARNOLD:
-        {JSON.stringify(
-          actors.filter(el => el.name === 'Arnold Schwarzenegger')[0]
-        )}
-      </p>
+      </section>
     </div>
   )
 }
