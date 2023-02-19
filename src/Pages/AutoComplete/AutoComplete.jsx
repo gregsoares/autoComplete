@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 
+//TODO: move logic for autoComplete here
+//TODO: make displayData component
+
 const AutoComplete = ({ data, handleOptions, handleSelectedOption }) => {
   const [optionsDisplay, setOptionsDisplay] = useState(false)
   return (
@@ -7,6 +10,7 @@ const AutoComplete = ({ data, handleOptions, handleSelectedOption }) => {
       AutoComplete:
       <section className='relative'>
         <input
+          className='rounded-lg '
           onChange={e => {
             handleOptions(e.target.value)
           }}
@@ -17,7 +21,6 @@ const AutoComplete = ({ data, handleOptions, handleSelectedOption }) => {
           name='optionsInput'
           id='options'
         />
-        <h1>optionsDisplay: {optionsDisplay === true ? 'True' : 'False'}</h1>
         {optionsDisplay && (
           <ul className='absolute top-12'>
             {data?.flat().map((item, index) => (

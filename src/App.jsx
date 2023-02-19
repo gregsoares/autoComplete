@@ -21,7 +21,9 @@ function App() {
       setSelectedOption(options[0])
     }
 
-    if (option) setSelectedOption([option])
+    if (option) {
+      setSelectedOption([option])
+    }
   }
 
   const handleOptions = inputString => {
@@ -43,7 +45,9 @@ function App() {
     }
   }
 
+  //TODO: Export fetchData to utility, return data fetched as is
   const fetchData = async () => {
+    //TODO: Add signal parameter for aborting fetch call
     // Order in array matters so categories are saved in the same order in state
     const allData = [
       getActors().then(res => res),
@@ -54,7 +58,9 @@ function App() {
   }
 
   useEffect(() => {
-    fetchData()
+    let controller = new AbortController()
+    fetchData({ signal: controller.signal })
+    return () => {}
   }, [])
 
   return (
@@ -62,15 +68,15 @@ function App() {
       <header className='p-6 border'>
         <h1 className='text-4xl font-bold text-center'>AutoComplete</h1>
       </header>
-      <section className='p-6 border'>
-        {data && (
+      <section className='p-6 border w-full'>
+        {data ? (
           <AutoComplete
             data={options.length ? options : data}
             handleOptions={handleOptions}
             handleSelectedOption={handleSelectedOption}
           />
-        )}
-        {selectedOption?.length && <InfoCard data={selectedOption} />}
+        ) : null}
+        {selectedOption?.length ? <InfoCard data={selectedOption} /> : null}
       </section>
     </div>
   )
