@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getMovies, getActors, getDirectors } from './utility/api'
+import { fetchData } from './utility/apiController'
 
 import AutoComplete from './Pages/AutoComplete/AutoComplete'
 import InfoCard from './Components/InfoCard'
@@ -45,21 +45,11 @@ function App() {
     }
   }
 
-  //TODO: Export fetchData to utility, return data fetched as is
-  const fetchData = async () => {
-    //TODO: Add signal parameter for aborting fetch call
-    // Order in array matters so categories are saved in the same order in state
-    const allData = [
-      getActors().then(res => res),
-      getMovies().then(res => res),
-      getDirectors().then(res => res),
-    ]
-    setData(await Promise.all(allData).then(res => res.flat()))
-  }
-
   useEffect(() => {
     let controller = new AbortController()
-    fetchData({ signal: controller.signal })
+    fetchData({ signal: controller.signal }).then(async allData =>
+      setData(allData.flat())
+    )
     return () => {}
   }, [])
 
