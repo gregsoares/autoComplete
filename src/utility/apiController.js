@@ -1,6 +1,7 @@
 import { getMovies, getActors, getDirectors } from './api'
+//TODO: Add signal parameter for aborting fetch call
+
 export const fetchData = async () => {
-  //TODO: Add signal parameter for aborting fetch call
   // Order in array matters so categories are saved in the same order in state
   const allData = [
     getActors().then(res => res),

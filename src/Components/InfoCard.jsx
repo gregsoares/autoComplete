@@ -1,7 +1,3 @@
-import React from 'react'
-
-//@TODO: make displayData function returning styled JSX
-
 const InfoCard = ({ data }) => {
   function DisplayResults() {
     return Object.entries(data[0]).map((item, index) => (

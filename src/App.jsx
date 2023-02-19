@@ -1,16 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { fetchData } from './utility/apiController'
-
 import AutoComplete from './Pages/AutoComplete/AutoComplete'
 import InfoCard from './Components/InfoCard'
-/** TODO:
- *
- * -- Call the API to get the data (from json files) :
- * -- Load all the data into the state
- * -- Pass the data to the components
- *
- *
- */
+
 function App() {
   const [data, setData] = useState({})
   const [options, setOptions] = useState([])
@@ -45,14 +37,15 @@ function App() {
     }
   }
 
+  function displaySelectedOption() {
+    return selectedOption?.length == 1
+  }
   useEffect(() => {
-    let controller = new AbortController()
-    fetchData({ signal: controller.signal }).then(async allData =>
-      setData(allData.flat())
-    )
+    fetchData().then(async allData => setData(allData.flat()))
     return () => {}
   }, [])
 
+  console.log('selectedOption: ', selectedOption)
   return (
     <div className='bg-slate-300 min-h-screen '>
       <header className='p-6 border'>
@@ -66,7 +59,7 @@ function App() {
             handleSelectedOption={handleSelectedOption}
           />
         ) : null}
-        {selectedOption?.length ? <InfoCard data={selectedOption} /> : null}
+        {displaySelectedOption() && <InfoCard data={selectedOption} />}
       </section>
     </div>
   )
