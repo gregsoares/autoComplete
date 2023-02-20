@@ -2,7 +2,14 @@ const InfoCard = ({ data }) => {
   function DisplayResults() {
     return Object.entries(data[0]).map((item, index) => (
       <p className='px-2 py-1' key={item[0] + index}>
-        <b className='capitalize'>{item[0]}</b>: {item[1]}
+        <b className='capitalize'>{item[0]}</b>:
+        {item[1] == 'object'
+          ? item[1].map(itemData => (
+              <p className='px-1'>
+                ${` `} ${itemData}
+              </p>
+            ))
+          : item[1]}
       </p>
     ))
   }

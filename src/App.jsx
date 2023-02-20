@@ -45,7 +45,6 @@ function App() {
     return () => {}
   }, [])
 
-  console.log('selectedOption: ', selectedOption)
   return (
     <div className='bg-slate-300 min-h-screen '>
       <header className='p-6 border'>
