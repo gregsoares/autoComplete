@@ -3,9 +3,14 @@ import React, { useState } from 'react'
 //TODO: move logic for autoComplete here
 //TODO: make displayData component
 
-const AutoComplete = ({ data, handleOptions, handleSelectedOption }) => {
+const AutoComplete = ({
+  hasData = false,
+  data = [],
+  handleOptions,
+  handleSelectedOption,
+}) => {
   const [optionsDisplay, setOptionsDisplay] = useState(false)
-
+  console.log('AutoComplete Rendered')
   function DisplayOptions() {
     if (optionsDisplay) {
       return (
@@ -17,7 +22,7 @@ const AutoComplete = ({ data, handleOptions, handleSelectedOption }) => {
                 setOptionsDisplay(false)
               }}
               className='w-fit px-2 py-1 rounded-xl hover:bg-teal-500'
-              key={item?.name + item?.birthdate + item?.birthname + index}
+              key={item + index}
             >
               {item.name}
             </li>
@@ -32,6 +37,7 @@ const AutoComplete = ({ data, handleOptions, handleSelectedOption }) => {
       AutoComplete:
       <section className='relative'>
         <input
+          disabled={!hasData}
           className='rounded-lg '
           onChange={e => {
             handleOptions(e.target.value)

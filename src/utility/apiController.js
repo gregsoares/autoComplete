@@ -8,6 +8,5 @@ export const fetchData = async () => {
     getMovies().then(res => res),
     getDirectors().then(res => res),
   ]
-
   return await Promise.all(allData)
 }

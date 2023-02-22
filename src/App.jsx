@@ -3,7 +3,11 @@ import { fetchData } from './utility/apiController'
 import AutoComplete from './Pages/AutoComplete/AutoComplete'
 import InfoCard from './Components/InfoCard'
 
+// Uncomment the line below to show FCP issue when waiting for data before loading content
+// const storedData = await fetchData().then(allData => allData)
 function App() {
+  // FCP Issue Implementation
+  // const [data, setData] = useState(storedData)
   const [data, setData] = useState({})
   const [options, setOptions] = useState([])
   const [selectedOption, setSelectedOption] = useState(null)
@@ -56,6 +60,7 @@ function App() {
             data={options.length ? options : data}
             handleOptions={handleOptions}
             handleSelectedOption={handleSelectedOption}
+            hasData={data?.length ? true : false}
           />
         ) : null}
         {displaySelectedOption() && <InfoCard data={selectedOption} />}
